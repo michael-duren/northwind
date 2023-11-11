@@ -1,0 +1,26 @@
+@page
+
+@functions
+{
+    public string? DayName { get; set; }
+
+    public void OnGet()
+    {
+        ViewData["Title"] = "Northwind B2B";
+        DayName = DateTime.Now.ToString("dddd");
+    }
+}
+
+<div class="jumbotron">
+    <h1 class="display-3 text-primary">Welcome to @ViewData["Title"]</h1>
+    666 Building Websites Using ASP.NET Core Razor Pages
+    <p class="lead">We supply products to our customers.</p>
+    <hr/>
+    <p>Its @DayName! Our customers include restaurants, hotels, and cruise lines.</p>
+    <p>
+        <a class="btn btn-primary"
+           href="suppliers">
+            Learn More About Our Suppliers
+        </a>
+    </p>
+</div>
