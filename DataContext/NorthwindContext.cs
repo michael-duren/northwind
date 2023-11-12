@@ -71,25 +71,22 @@ public partial class NorthwindContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
+        if (optionsBuilder.IsConfigured) return;
+        SqlConnectionStringBuilder builder = new()
         {
-            SqlConnectionStringBuilder builder = new();
+            DataSource = "localhost",
+            InitialCatalog = "Northwind",
+            TrustServerCertificate = true,
+            MultipleActiveResultSets = true,
+            ConnectTimeout = 3,
+            UserID = Environment.GetEnvironmentVariable("MY_SQL_USER"),
+            Password = Environment.GetEnvironmentVariable("MY_SQL_PASSWORD")
+        };
 
-            builder.DataSource = "localhost";
-            builder.InitialCatalog = "Northwind";
-            builder.TrustServerCertificate = true;
-            builder.MultipleActiveResultSets = true;
+        optionsBuilder.UseSqlServer(builder.ConnectionString);
 
-            builder.ConnectTimeout = 3;
-
-            builder.UserID = Environment.GetEnvironmentVariable("MY_SQL_USER");
-            builder.Password = Environment.GetEnvironmentVariable("MY_SQL_PASSWORD");
-
-            optionsBuilder.UseSqlServer(builder.ConnectionString);
-
-            optionsBuilder.LogTo(NorthwindContextLogger.WriteLine,
-                new[] { Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting });
-        }
+        optionsBuilder.LogTo(NorthwindContextLogger.WriteLine,
+            new[] { Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting });
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

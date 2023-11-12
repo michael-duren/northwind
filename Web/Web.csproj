@@ -13,4 +13,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DataContext\DataContext.csproj" />
+    </ItemGroup>
+
 </Project>
