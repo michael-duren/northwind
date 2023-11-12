@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DataContext\DataContext.csproj" />
+      <ProjectReference Include="..\RazorClassLib\RazorClassLib.csproj" />
     </ItemGroup>
 
 </Project>
